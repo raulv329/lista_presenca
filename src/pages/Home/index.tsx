@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
+import { Card, CardProps } from '../../components/Card';
 
-import { Card } from '../../components/Card';
+type ApiProfile = {
+  name: string;
+  avatar_url: string;
+}
+
+type User = {
+  name: string;
+  avatar: string;
+}
+
 
 export function Home() {
   const [studentName, setStudentName] = useState('');
-  const [students, setStudents] = useState([]);
-  const [user, setUser] = useState({ name: '', avatar: '' });
+  const [students, setStudents] = useState<CardProps[]>([]);
+  const [user, setUser] = useState<User> ({} as User);
 
   function handleAddStudent() {
     const newStudent = {
@@ -24,8 +34,8 @@ export function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('https://api.github.com/users/rodrigorgtic');
-      const data = await response.json();
+      const response = await fetch('https://api.github.com/users/raulv329');
+      const data = await response.json() as ApiProfile;      
       console.log("DADOS ===> ", data);
 
       setUser({
